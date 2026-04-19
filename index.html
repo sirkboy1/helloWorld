@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strategy Lab — ORB / VWAP+EMA / ICT Killzones</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Trading Strategy Simulation Lab</h1>
+    <p>
+      Explore how <strong>Opening Range Breakout</strong>, <strong>VWAP + 9 EMA</strong>, and
+      <strong>ICT Killzones + Pivots</strong> might behave across asset classes.
+    </p>
+    <p class="disclaimer">
+      Educational simulation only — this uses synthetic market data and simplified logic, not the exact proprietary TradingView indicator internals.
+    </p>
+  </header>
+
+  <main>
+    <section class="controls card">
+      <h2>Simulation Controls</h2>
+
+      <div class="grid two">
+        <label>
+          Asset Class
+          <select id="assetClass"></select>
+        </label>
+
+        <label>
+          Market Regime
+          <select id="regime">
+            <option value="mixed" selected>Mixed</option>
+            <option value="trending">Trending</option>
+            <option value="range">Range-bound</option>
+            <option value="volatile">High volatility</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="grid three">
+        <label>
+          Number of sessions
+          <input id="sessions" type="number" min="30" max="5000" value="252" />
+        </label>
+
+        <label>
+          Risk per trade (% equity)
+          <input id="risk" type="number" step="0.1" min="0.1" max="5" value="1" />
+        </label>
+
+        <label>
+          Starting balance ($)
+          <input id="startBalance" type="number" min="100" step="100" value="10000" />
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Strategy Selection</legend>
+        <div class="check-grid">
+          <label><input type="checkbox" class="strategy" value="orb" checked /> Opening Range Breakout</label>
+          <label><input type="checkbox" class="strategy" value="vwap" checked /> VWAP + 9 EMA</label>
+          <label><input type="checkbox" class="strategy" value="ict" checked /> ICT Killzones + Pivots</label>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button id="runSim">Run Simulation</button>
+        <button id="runMatrix" class="secondary">Run Cross-Asset Matrix</button>
+      </div>
+    </section>
+
+    <section class="results card">
+      <h2>Single Simulation Result</h2>
+      <div id="summary"></div>
+      <canvas id="equityChart" width="900" height="300" aria-label="Equity curve"></canvas>
+      <canvas id="drawdownChart" width="900" height="220" aria-label="Drawdown curve"></canvas>
+      <div id="insights" class="insights"></div>
+    </section>
+
+    <section class="matrix card">
+      <h2>Cross-Asset + Strategy Combination Matrix</h2>
+      <p class="muted">Compares each strategy alone, each pair, and all three combined for every asset class.</p>
+      <div id="matrixTableWrap"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Built for interactive learning and idea testing. Always validate on real historical data before risking capital.</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
